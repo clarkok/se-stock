@@ -9,7 +9,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "bluebird": "^3.4.0"
+    "bluebird": "^3.4.0",
+    "knex": "^0.11.3",
+    "mysql": "^2.10.2",
+    "node-mysql": "^0.4.2"
   },
   "devDependencies": {
     "mocha": "^2.4.5"
