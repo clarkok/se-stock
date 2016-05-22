@@ -14,3 +14,7 @@
   * 已经放在 `.gitignore` 中
 * 代码 clone 之后需运行 `npm install` 安装依赖
 * 依赖的包应该用 `npm install --save <package>` 来添加，这样会将依赖写入 `package.json` 中
+* 各个子模块代码放在 `lib` 目录下，自己建一个文件夹
+* 在 `test` 目录的相应文件夹下放置单元测试代码
+* 单元测试用 [mocha](https://mochajs.org) 框架搭建
+  * 已经在 `package.json` 中
