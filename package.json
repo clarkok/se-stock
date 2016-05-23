@@ -4,17 +4,20 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "./node_modules/mocha/bin/mocha ./test/test_all.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "bluebird": "^3.4.0",
+    "check-arg-types": "^1.1.0",
     "knex": "^0.11.3",
+    "moment": "^2.13.0",
     "mysql": "^2.10.2",
     "node-mysql": "^0.4.2"
   },
   "devDependencies": {
+    "chai": "^3.5.0",
     "mocha": "^2.4.5"
   }
 }
