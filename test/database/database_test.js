@@ -105,6 +105,79 @@ describe('Database', function () {
         });
     });
 
+    describe('#queryAllOperationStocks', function () {
+        it('should get all stocks operated', function () {
+            let buying_id, selling_id;
+            return uut.getAllBuyingInstructions('12345')
+                .then((insts) => {
+                    assert.equal(insts.length, 1);
+                    buying_id = insts[0].id;
+                    return uut.getAllSellingInstructions('12345');
+                })
+                .then((insts) => {
+                    assert.equal(insts.length, 1);
+                    selling_id = insts[0].id;
+                    return uut.makeTrade(buying_id, selling_id, 50, 100);
+                })
+                .then(() => uut.queryAllOperationStocks())
+                .then((stocks) => {
+                    assert.equal(stocks.length, 1);
+                    assert.equal(stocks[0], '12345');
+                });
+        });
+    });
+
+    describe('#queryMaxMin', function () {
+        it('should find max / min price of operations', function () {
+            let buying_id, selling_id;
+            return uut.getAllBuyingInstructions('12345')
+                .then((insts) => {
+                    assert.equal(insts.length, 1);
+                    buying_id = insts[0].id;
+                    return uut.getAllSellingInstructions('12345');
+                })
+                .then((insts) => {
+                    assert.equal(insts.length, 1);
+                    selling_id = insts[0].id;
+                    return Promise.all([
+                        uut.makeTrade(buying_id, selling_id, 1, 100),
+                        uut.makeTrade(buying_id, selling_id, 1, 10),
+                        uut.makeTrade(buying_id, selling_id, 1, 1),
+                    ]);
+                })
+                .then(() => uut.queryMaxMin('12345'))
+                .then((max_min) => {
+                    assert.equal(max_min.max, 100);
+                    assert.equal(max_min.min, 1);
+                });
+        });
+    });
+
+    describe('#queryTotalAmount', function () {
+        it('should find total amount traded', function () {
+            let buying_id, selling_id;
+            return uut.getAllBuyingInstructions('12345')
+                .then((insts) => {
+                    assert.equal(insts.length, 1);
+                    buying_id = insts[0].id;
+                    return uut.getAllSellingInstructions('12345');
+                })
+                .then((insts) => {
+                    assert.equal(insts.length, 1);
+                    selling_id = insts[0].id;
+                    return Promise.all([
+                        uut.makeTrade(buying_id, selling_id, 1, 100),
+                        uut.makeTrade(buying_id, selling_id, 1, 10),
+                        uut.makeTrade(buying_id, selling_id, 1, 1),
+                    ]);
+                })
+                .then(() => uut.queryTotalAmount('12345'))
+                .then((total) => {
+                    assert.equal(total, 3);
+                });
+        });
+    });
+
     describe('#cancelInstruction', function () {
         it('should cancel an instruction', function () {
             let buying_id;
