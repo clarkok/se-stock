@@ -15,13 +15,13 @@ describe('Database', function () {
 
     describe('#commitBuyingInstruction', function () {
         it('commit a buying instruction', function () {
-            return uut.commitBuyingInstruction(1, 12345, 10, 10).then((ids) => { assert.equal(ids.length, 1); });
+            return uut.commitBuyingInstruction(1, 12345, 10, 10).then((ids) => { assert.typeOf(ids, 'number'); });
         });
     });
 
     describe('#commitSellingInstruction', function () {
         it('commit a selling instruction', function () {
-            return uut.commitSellingInstruction(2, 12345, 20, 20).then((ids) => { assert.equal(ids.length, 1); });
+            return uut.commitSellingInstruction(2, 12345, 20, 20).then((ids) => { assert.typeOf(ids, 'number'); });
         });
     });
 
@@ -65,7 +65,7 @@ describe('Database', function () {
                 .then((insts) => {
                     assert.equal(insts.length, 1);
                     selling_id = insts[0].id;
-                    return uut.makeTrade(buying_id, selling_id, 50);
+                    return uut.makeTrade(buying_id, selling_id, 50, 100);
                 })
                 .then(() => uut.getAllBuyingInstructions(12345))
                 .then((insts) => {
