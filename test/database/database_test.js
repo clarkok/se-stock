@@ -80,6 +80,31 @@ describe('Database', function () {
         });
     });
 
+    describe('#queryLastOperation', function () {
+        it('should get last operation', function () {
+            let buying_id, selling_id;
+            return uut.getAllBuyingInstructions(12345)
+                .then((insts) => {
+                    assert.equal(insts.length, 1);
+                    buying_id = insts[0].id;
+                    return uut.getAllSellingInstructions(12345);
+                })
+                .then((insts) => {
+                    assert.equal(insts.length, 1);
+                    selling_id = insts[0].id;
+                    return uut.makeTrade(buying_id, selling_id, 50, 100);
+                })
+                .then(() => uut.queryLastOperation(12345))
+                .then((op) => {
+                    assert.equal(op.buying_id, buying_id);
+                    assert.equal(op.selling_id, selling_id);
+                    assert.equal(op.amount, 50);
+                    assert.equal(op.price, 100);
+                    assert.equal(op.stock, 12345);
+                });
+        });
+    });
+
     describe('#clearAll', function () {
         it('should clear all information', function () {
             return uut.clearAll();
