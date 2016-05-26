@@ -8,7 +8,7 @@ describe('Database', function () {
     let uut = Database(config.database);
 
     beforeEach(function () {
-        return uut.clearAllInstructions()
+        return uut.clearAll()
             .then(() => uut.commitBuyingInstruction(1, 12345, 10, 100))
             .then(() => uut.commitSellingInstruction(2, 12345, 20, 200));
     });
@@ -77,6 +77,12 @@ describe('Database', function () {
                     assert.equal(insts.length, 1);
                     assert.equal(insts[0].amount, 150);
                 })
+        });
+    });
+
+    describe('#clearAll', function () {
+        it('should clear all information', function () {
+            return uut.clearAll();
         });
     });
 });
