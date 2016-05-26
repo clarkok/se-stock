@@ -105,6 +105,22 @@ describe('Database', function () {
         });
     });
 
+    describe('#cancelInstruction', function () {
+        it('should cancel an instruction', function () {
+            let buying_id;
+            return uut.getAllBuyingInstructions(12345)
+                .then((insts) => {
+                    assert.equal(insts.length, 1);
+                    buying_id = insts[0].id;
+                    return uut.cancelInstruction(buying_id);
+                })
+                .then(() => uut.getInstructionById(buying_id))
+                .then((inst) => {
+                    assert.equal(inst.is_cancelled, 1);
+                })
+        });
+    });
+
     describe('#clearAll', function () {
         it('should clear all information', function () {
             return uut.clearAll();
