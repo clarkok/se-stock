@@ -5,11 +5,19 @@ let db = require('../database/database.js')(config.database);
 let Promise = require('bluebird');
 
 
-//股票代码和收盘价
-//queryBid(stock){
-	//暂定
-//}
+//股票代码和收盘价  缺数据
+/*queryBid(stock, price){
+	db.getClosingPrice(stock).then((oldprice) = > { 
+	
+	} );
+}*/  
 
+function queryStockCode(id){
+	return db.getInstructionById(id).then((insts) => {
+		return Promis.resolve(insts.stock);
+	});
+	
+}
 
 function queryCancellable(id){
 	return db.getInstructionById(id).then((insts) => {
@@ -52,7 +60,7 @@ function recallIns(id){
 	
 
 function insertDeal(buying_id, selling_id, amount,price){
-	return makeTrade(buying_id, selling_id, amount,price);
+	return db.makeTrade(buying_id, selling_id, amount,price);
 }
 
 
