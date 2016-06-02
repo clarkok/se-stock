@@ -215,7 +215,23 @@ describe('Database', function () {
                 .then(() => uut.getInstructionById(buying_id))
                 .then((inst) => {
                     assert.equal(inst.is_cancelled, 1);
-                })
+                });
+        });
+    });
+
+    describe('#storeClosingPrice', function () {
+        it('should store a closing price for a stock', function () {
+            return uut.storeClosingPrice('12345', 10.0);
+        });
+    });
+
+    describe('#getClosingPrice', function () {
+        it('should retrive the closing price', function () {
+            return uut.storeClosingPrice('12345', 10.0)
+                .then(() => uut.getClosingPrice('12345'))
+                .then((price) => {
+                    assert.equal(price, 10.0);
+                });
         });
     });
 
