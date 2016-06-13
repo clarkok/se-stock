@@ -4,5 +4,12 @@
         "user" : "username",
         "password" : "password",
         "database" : "database"
+    },
+    "server" : {
+        "port" : 3000
+    },
+    "api" : {
+        "stock" : "",
+        "account" : ""
     }
 }
